@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Page</title>
+    <link rel="stylesheet" href="scoreSheet.css">
+    <link rel="stylesheet" href="bootstrap-dist/bootstrap-dist1/css/bootstrap.min.css">
+</head>
+<body>
+    <div id="quizBody">
+        <div id="topMostSection" class="d-flex">
+            <img src="img/shosan.jpg" alt="logo" id="logo1">
+            <div id="textColumn" class="container">
+                <h5 id="testName" class="">SHOSAN COMPUTER BASED TEST</h5>
+            </div>   
+        </div>
+        <div id="lowerText">
+            Your score sheet is presented below. Click on the Print button below to print your score sheet.
+        </div>
+        <div id="scoreBorder">
+            <div id="scorePrintOut"></div>
+        </div>
+        <button id="printBtn" onclick="window.print()">PRINT EXAM SCORE</button>
+    </div>
+
+
+    <script src="bootstrap-dist/bootstrap-dist1/js/bootstrap.bundle.min.js"></script>
+    <script src="cbt.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Page</title>
+    <link rel="stylesheet" href="quizPage.css">
+    <link rel="stylesheet" href="bootstrap-dist/bootstrap-dist1/css/bootstrap.min.css">
+</head>
+<body>
+    <div id="quizBody">
+        <div id="topSection">
+            <div id="timerBorder">
+                <div id="timer1"></div>
+            </div>
+            <div id="quizTitle">
+                <h1 id="quizTitle1">Exam Questions</h1>
+                <h3 id="quizTitle2">Current Affairs/General Knowledge</h3>
+            </div>
+        </div>
+        <div id="scoreText"></div>
+        <div id="questionBox" name="questionButton">
+            <div id="question"></div>
+            <div id="rBtn" class="" name="optionButton">
+                <button id="opA" name="optionValue1" onclick="optionSelect1()"></button> <br>
+                <button id="opB" name="optionValue2" onclick="optionSelect2()"></button> <br>
+                <button id="opC" name="optionValue3" onclick="optionSelect3()"></button> <br>
+                <button id="opD" name="optionValue4" onclick="optionSelect4()"></button>
+            </div>
+            <div class="container-fluid">
+                <div id="btnClass">
+                    <div>
+                        <button id="prevBtn">Previous</button>
+                    </div>
+                    <div>
+                        <form action="scorePage.html">
+                            <button id="submit" type="submit">Submit</button>
+                        </form>
+                    </div>
+                    <div>
+                        <button id="nextBtn">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div id="warnText"></div>
+    </div>
+
+    <script src="bootstrap-dist/bootstrap-dist1/js/bootstrap.bundle.min.js"></script>
+    <script src="cbt.js"></script>
+</body>
+</html>

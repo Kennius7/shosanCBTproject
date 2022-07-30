@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Based Test Page</title>
+    <link rel="stylesheet" href="cbt.css">
+    <link rel="stylesheet" href="bootstrap-dist/bootstrap-dist1/css/bootstrap.min.css">
+</head>
+<body id="cbtBody">
+    <div id="">
+        <div id="topMostSection" class="d-flex">
+            <img src="img/shosan.jpg" alt="logo" id="logo1" class="">
+            <div id="textColumn" class="container">
+                <h5 id="testName" class="">SHOSAN COMPUTER BASED TEST</h5>
+                <div id="lowerText" class="">Welcome to your Computer Based Test.</div>
+            </div>   
+        </div>
+
+        <div id="formBorder" class="">
+            <form action="startPage.html" onsubmit="cbtValidate()" method="" id="formControl1" name="cbtForm" class="">
+                <div class="mb-1">
+                    <label for="fullName" class="form-label"></label>
+                    <input type="text" placeholder="Full Name" name="fullName" class="form-control" id="fullName">
+                </div>
+                <div class="mb-1">
+                    <label for="exampleInputEmail1" class="form-label"></label>
+                    <input type="email" placeholder="Email address" name="emailForm" class="form-control" id="exampleInputEmail1">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label"></label>
+                    <input type="password" placeholder="Password" name="passwordForm" class="form-control" id="exampleInputPassword1">
+                    <div id="passErrorMsg" class="form-text"></div>
+                </div>
+                <div id="btnDiv">
+                        <button id="loginBtn" type="submit" class="btn btn-primary btn-info text-light fw-bold">
+                            Login
+                        </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="bootstrap-dist/bootstrap-dist1/js/bootstrap.bundle.min.js"></script>
+    <script src="cbt.js"></script>
+</body>
+</html>

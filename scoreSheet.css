@@ -1,0 +1,169 @@
+@font-face {
+    font-family: BennB;
+    src: url(FontsFolder/BENNB.TTF);
+}
+@font-face {
+    font-family: UbuntuItalic;
+    src: url(FontsFolder/Ubuntu/Ubuntu-Italic.ttf);
+}
+@font-face {
+    font-family: callOfOps;
+    src: url(FontsFolder/Call\ of\ Ops\ Duty.otf);
+}
+@font-face {
+    font-family: BebasNeueBook;
+    src: url(FontsFolder/BebasNeue\ Book.otf);
+}
+@font-face {
+    font-family: CODEBOLD;
+    src: url(FontsFolder/CODE\ Bold.otf);
+}
+body{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)), url(img/exampics.jpg);;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+}
+#topMostSection{
+    margin-top: 10%;
+    width: 95%;
+}
+#logo1{
+    width: 25%;
+    height: 25%;
+    margin-left: 10%;
+    border-radius: 50%;
+    border-color: white;
+    border-style: solid;
+}
+#textColumn{
+    width: 100%;
+    margin: auto;
+}
+#testName{
+    color: aqua;
+    text-align: center;
+    margin-top: 5%;
+    margin: auto;
+    font-family: callOfOps;
+    font-size: 18px;
+    letter-spacing: 4px;
+}
+#lowerText{
+    margin: auto;
+    margin-top: 5%;
+    width: 100%;
+    text-align: center;
+    color: white;
+    text-shadow: 20px;
+    font-family: UbuntuItalic;
+}
+#printBtn{
+    text-align: center;
+    color: rgb(82, 196, 231);
+    background-color: black;
+    margin-left: 10%;
+    margin-top: 5vh;
+    width: 80%;
+    height: 10%;
+    border-radius: 10px;
+    border-color: rgb(255, 255, 255);
+    border-style: solid;
+    font-family: BebasNeueBook;
+    font-size: 16px;
+    letter-spacing: 7px;
+}
+#scoreBorder{
+    background-color: white;
+    width: 95%;
+    height: 50vh;
+    margin-left: 2.5%;
+    margin-top: 10%;
+    border-radius: 8px;
+    border-color: aqua;
+    border-style: solid;
+}
+#scorePrintOut{
+    margin-top: 38%;
+    text-align: center;
+    color: black;
+    font-size: 30px;
+}
+
+
+@media only screen and (min-width: 992px) {
+    body{
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), url(img/exampics.jpg);;
+        background-repeat: no-repeat;
+        width: 100vw;
+        height: 100vh;
+        background-size: cover;
+    }
+    #topMostSection{
+        margin-top: 1%;
+        width: 90%;
+        margin: auto;
+    }
+    #logo1{
+        width: 16%;
+        height: 16%;
+        margin-left: 0%;
+        border-radius: 50%;
+        border-color: white;
+        border-style: solid;
+    }
+    #textColumn{
+        width: 90%;
+        margin-top: 5%;
+    }
+    #testName{
+        margin-left: -18%;
+        color: aqua;
+        text-align: center;
+        font-size: 40px;
+        font-family: callOfOps;
+        letter-spacing: 6px;
+    }
+    #lowerText{
+        margin-top: 4%;
+        width: 100%;
+        text-align: center;
+        color: white;
+        text-shadow: 20px;
+        font-family: UbuntuItalic;
+    }
+    #printBtn{
+        font-size: 16px;
+        font-family: CODEBOLD;
+        letter-spacing: 10px;
+        text-align: center;
+        color: rgb(82, 196, 231);
+        background-color: black;
+        margin-left: 30%;
+        width: 40%;
+        height: 10%;
+        border-radius: 10px;
+        border-color: rgb(255, 255, 255);
+        border-style: solid;
+    }
+    #scoreBorder{
+        margin: auto;
+        margin-top: 0%;
+        background-color: white;
+        width: 60%;
+        height: 40vh;
+        border-radius: 8px;
+        border-color: aqua;
+        border-style: solid;
+    }
+    #scorePrintOut{
+        margin-top: 11%;
+        text-align: center;
+        color: black;
+        font-size: 30px;
+    }
+}
+
+
+
