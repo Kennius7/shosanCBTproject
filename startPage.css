@@ -37,7 +37,10 @@ body{
     font-style: italic;
     font-weight: lighter;
     text-align: center;
-} 
+}
+#btmText {
+    margin-top: -25px;
+}  
 
 @media only screen and (min-width: 992px){
     body{
@@ -78,7 +81,10 @@ body{
         font-style: italic;
         font-weight: lighter;
         text-align: center;
-    }    
+    }
+    #btmText {
+        margin-top: -25px;
+    }   
 }
 
 /* @media only screen and (min-width: 390px) and (max-width: 900px){

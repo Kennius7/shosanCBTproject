@@ -6,6 +6,10 @@
     font-family: callOfOps2;
     src: url(FontsFolder/Call\ of\ Ops\ Duty.otf);
 }
+@font-face {
+    font-family: beckett;
+    src: url(FontsFolder/BECKETT_.TTF);
+}
 
 #cbtBody{
     background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)), url(img/exampics.jpg);
@@ -39,16 +43,19 @@
     margin: auto;
 }
 #testName{
-    font-family: callOfOps2;
+    font-size: 28px;
+    letter-spacing: 3px;
+    font-family: beckett;
     color: aqua;
-    text-align: center;
+    text-align: end;
     margin-top: 5%;
     margin: auto;
 }
 #lowerText{
     margin: auto;
     width: 100%;
-    text-align: center;
+    text-align: end;
+    letter-spacing: 2px;
     color: white;
     text-shadow: 20px;
 }
@@ -131,18 +138,17 @@
         color: aqua;
         text-align: center;
         margin-top: 0%;
-        font-size: 45px;
-        font-family: callOfOps2;
+        font-size: 55px;
+        font-family: beckett;
         letter-spacing: 6px;
     }
     #lowerText{
-        padding-right: 20%;
+        padding-right: 14%;
         width: 100%;
         text-align: center;
         color: white;
         text-shadow: 20px;
-        font-size: 20px;
-        font-style: italic;
+        font-size: 25px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
     #secondLowerText{
@@ -161,7 +167,7 @@
         border-style: solid;
     }
     #formBorder{
-        margin-top: 0%;
+        margin-top: -5%;
         margin-bottom: 10vh;
         background-color: white;
         width: 60%;
