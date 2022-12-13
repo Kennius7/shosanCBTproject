@@ -82,7 +82,6 @@ const examOptionsDB = [];
 
 
 
-
 /* ------------DOM INITIALIZATIONS---------------- */
 
 
