@@ -197,7 +197,7 @@ let examCountDownTimer = () => {
     b--;
     quizWarnText.innerHTML = `You have <span style="color: goldenrod">${hrs2} hours, ${mins2} minutes 
     and ${sec2} seconds</span> left, after which your exam will be terminated and you will be directed 
-    to your score page. ${examScore}`
+    to your score page.`
     sec2 = Math.floor(b % 3600 % 60 );
     mins2 = Math.floor(b % 3600 / 60);
     hrs2 = Math.floor(b / 3600);
