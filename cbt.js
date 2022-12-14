@@ -1,5 +1,5 @@
 "use strict"
-/* ----------------ARRAYS AND OBJECTS SECTION---------------- */
+/* ===============================ARRAYS AND OBJECTS SECTION=========================================== */
 
 
 //Array of objects that holds the exam questions and correct answers data.
@@ -80,7 +80,7 @@ const examOptionsDB = [];
 
 
 
-/* ------------DOM INITIALIZATIONS---------------- */
+/* ===================================DOM INITIALIZATIONS============================================== */
 
 
 //DOM initialization for the name value entered in the form on the index page.
@@ -111,7 +111,7 @@ const scorePrint = document.getElementById("scorePrintOut");
 
 
 
-/* -----------------FUNCTIONS AND DECLARATIONS----------------- */
+/* ====================================FUNCTIONS AND DECLARATIONS====================================== */
 
 
 /*Function for displaying a blank space three seconds after the error message has displayed, 
@@ -125,7 +125,7 @@ let alertTimeOut = () => {
 which will be used in reference to the examOptionDB array, when injecting data into it. */
 let currentQuestion = 0;
 const optionID = [examOptionA, examOptionB, examOptionC, examOptionD];
-//Function for loading the exam questions and options. Will be called later on.
+//Function for loading the exam questions and options. Will be called later down the code.
 let loadExam = () => {
     let myExam = examData[currentQuestion];
     examQuestion.innerHTML = myExam.question;
@@ -135,15 +135,16 @@ let loadExam = () => {
     optionID[3].innerHTML = myExam.optionD;  
 };
 
+/*Function for maintaining a blank text space where the error messages for the index page form,
+should display.*/
 let t = 0;
-//Function for maintaining a blank text space where the error messages for the index page form, should display.
 let blankErrMsg = () =>{
     setInterval(() => {
         t++;
         errMsg2.innerHTML = "<span class='text-light'>blank</span>";    
     }, 1000);
 }
-// blankErrMsg();
+blankErrMsg();
 
 //Function for validating the form on the index page.
 let cbtValidate = () => {
@@ -175,31 +176,28 @@ let cbtValidate = () => {
         }
 };
 
-
-let time1 = 0;
 //Function for displaying the final exam score on the score page.
+let time1 = 0;
 let printScore = () => {
     setInterval(() => {
         time1++;
         scorePrint.innerHTML = `<span class="text-info">${localStorage.getItem("nameVal")}</span>, your exam score is <span class="text-info">${localStorage.getItem("scoreVal")}/50.</span>`;
     }, 1000);
 }
-// printScore();
+printScore();
 
-
-//Declarations for the exam timer function.
+//Function for the countdown timer during the exam, which when it gets to zero, it will load the score page.
 let b = 300;
 let sec2 = 0;
 let mins2 = 0;
 let hrs2 = 0;
 let setInt3 = 0;
-
-//Function for the countdown timer during the exam, which when it gets to zero, it will load the score page.
 let examCountDownTimer = () => {
    setInt3 = setInterval(() => {
     b--;
-    quizWarnText.innerHTML = `You have <span style="color: goldenrod">${hrs2} hours, ${mins2} minutes and ${sec2} 
-    seconds</span> left, after which your exam will be terminated and you will be directed to your score page. ${currentQuestion}`
+    quizWarnText.innerHTML = `You have <span style="color: goldenrod">${hrs2} hours, ${mins2} minutes 
+    and ${sec2} seconds</span> left, after which your exam will be terminated and you will be directed 
+    to your score page. ${examScore}`
     sec2 = Math.floor(b % 3600 % 60 );
     mins2 = Math.floor(b % 3600 / 60);
     hrs2 = Math.floor(b / 3600);
@@ -254,25 +252,26 @@ examCountDownTimer();
 
 //Declaring the variable 'option' which will be used to determine whether an option has been selected or not.
 let option = 0;
-//Declaring the variable which will be used to determine which option has been selected.
+//Declaring the variables which will be used to determine which options have been selected and which haven't.
 let optionSelector;
 let otherOptionSelector1;
 let otherOptionSelector2;
 let otherOptionSelector3;
 
-/*Declarations for the exam options(buttons) functions, which will be used to determine
-whether an option which was selected is the correct answer or not.*/
+/*Declarations for the exam options(buttons) functions, which will be used to determine whether an option
+which was selected is the correct answer or not.*/
 let examOptionAvalue;
 let examOptionBvalue;
 let examOptionCvalue;
 let examOptionDvalue;
 
-//Array for option answer values.
+//Creating an Array for option answer values so they can be iterated.
 const examOptionID = [examOptionAvalue, examOptionBvalue, examOptionCvalue, examOptionDvalue];
 
-//Function for option answer values. Initially it was just an array but it wasn't reiterating its check on the currentQuestion variable,
-//and so remained at the initialization value throughout the run of the CBT. When I used a function and called it in the Next AddEventListener,
-//Each function call make a check!
+/*Creating a function for option answer values. Initially it was just an array but it wasn't reiterating
+its check on the (currentQuestion) variable, and so remained at the initialization value throughout the run
+of the CBT. When I used a function and called it in the Next AddEventListener, each function call made a 
+check!*/
 let examArrayOptionFunction = () => {
 	let examArrayOptionID = [
 	    examData[currentQuestion].optionA,
@@ -290,12 +289,12 @@ let examArrayOptionFunction = () => {
 
 
 
-/* ---------------OPTION BUTTONS EVENT HANDLERS--------------- */
+/* =====================================OPTION BUTTONS EVENT HANDLERS==================================== */
 
 
-/*Event handler function for assigning data to the first option when clicked, which will be used to determine
-whether the option selected was the right answer or not, and for color styling,
-differentiating it from other non-selected buttons.*/
+/*Creating functions for assigning data to the options when clicked, which will be used to determine whether
+the option selected was the right answer or not, and for color styling, differentiating it from other
+non-selected buttons, and for reseting the button colors when the next question loads.*/
 let optionColorReset = () => {
     examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
     examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
@@ -313,7 +312,7 @@ let optionFunct = () => {
     optionID[otherOptionSelector2].style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
     optionID[otherOptionSelector3].style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
 }
-
+/*Option button event listeners functions*/
 examOptionA.addEventListener('click', () => {
     optionSelector = 0;
     otherOptionSelector1 = 1;
@@ -345,6 +344,10 @@ examOptionD.addEventListener('click', () => {
 
 
 
+
+
+/* ============================EXAM PAGE FUNCTION CALL AND VARIABLE INITIALIZATION====================== */
+
 //Exam loader function called.
 loadExam();
 //The submit button display is disabled to only show up at the last question.
@@ -355,17 +358,18 @@ let examScore = 0;
 
 
 
-/*---------------EVENT HANDLERS FOR THE EXAM PAGE---------------*/
+/*=================================EVENT HANDLERS FOR THE EXAM PAGE=====================================*/
+
 
 
 //Next button event handler for describing the actions to be executed when the next button is clicked.
 nextButton.addEventListener("click", () => {
-    //When no option is selected, pop an alert saying you must click an option.
+    //======>When no option is selected, pop an alert saying you must click an option.
     if (currentQuestion < examData.length && option == 0) {
         alert("You must select an option");
     }
 
-    //When an option is selected and that option is the correct answer and it has not been selected before.
+    //======>When an option is selected and that option is the correct answer and it has not been selected before.
     else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
         examOptionID[optionSelector] == examData[currentQuestion].correctAnswer && 
         examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
@@ -375,16 +379,12 @@ nextButton.addEventListener("click", () => {
         option = 0;
         //In the line of code below, data is assigned to the examOptionDB array, indexed to the current question.
         examOptionsDB[currentQuestion] = examData[currentQuestion].correctAnswer;
-        console.log(examOptionsDB);
-        console.log(examArrayOptionFunction()[optionSelector]);
-        console.log(examArrayOptionFunction());
-        console.log(currentQuestion);
         currentQuestion++;
         optionColorReset();
         loadExam();
     }
 
-    //When an option is selected and that option is the correct answer and it has been selected before.
+    //======>When an option is selected and that option is the correct answer and it has been selected before.
     else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
         examOptionID[optionSelector] == examData[currentQuestion].correctAnswer && 
         examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
@@ -394,10 +394,9 @@ nextButton.addEventListener("click", () => {
         currentQuestion++;
         optionColorReset();
         loadExam();
-        console.log(examOptionsDB);
     }
 
-    //When an option is selected and that option is the wrong answer and it has not been selected before.
+    //======>When an option is selected and that option is the wrong answer and it has not been selected before.
     else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
         examOptionID[optionSelector] != examData[currentQuestion].correctAnswer && 
         examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
@@ -405,17 +404,12 @@ nextButton.addEventListener("click", () => {
         submitButton.style.display = "none";
         option = 0;
         examOptionsDB[currentQuestion] = null;
-        console.log(examOptionsDB);
-        console.log(examArrayOptionFunction()[optionSelector]);
-        console.log(examArrayOptionFunction());
-        console.log(currentQuestion);
         currentQuestion++;
         optionColorReset();
         loadExam();
-       
     }
 
-    //When an option is selected and that option is the wrong answer and it has been selected before.
+    //======>When an option is selected and that option is the wrong answer and it has been selected before.
     else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
         examOptionID[optionSelector] != examData[currentQuestion].correctAnswer && 
         examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
@@ -430,10 +424,9 @@ nextButton.addEventListener("click", () => {
         examOptionsDB[currentQuestion] = null;
         currentQuestion++;
         loadExam();
-        console.log(examOptionsDB);
     }
 
-    //When it is the last question and the first option is selected and it is the correct answer.
+    //======>When it is the last question and the first option is selected and it is the correct answer.
     else if (currentQuestion == examData.length - 1 && option == 1 &&
         examOptionID[optionSelector] == examData[currentQuestion].correctAnswer){
         
@@ -444,7 +437,7 @@ nextButton.addEventListener("click", () => {
         nextButton.style.display = "none";
     }
 
-    //When it is the last question and any option selected is the wrong answer.
+    //======>When it is the last question and any option selected is the wrong answer.
     else if (currentQuestion == examData.length - 1 && option == 1){
 
         submitButton.style.display = "block";
@@ -474,6 +467,10 @@ prevButton.addEventListener("click", () => {
 submitButton.addEventListener("click", () => {
     localStorage.setItem("scoreVal", examScore);
 });
-
-
-//<============================================END OF CODE===============================================>//
+//
+//
+//
+//
+//
+//
+//============================================END OF CODE===============================================//
