@@ -1,5 +1,5 @@
+"use strict"
 /* ----------------ARRAYS AND OBJECTS SECTION---------------- */
-
 
 
 //Array of objects that holds the exam questions and correct answers data.
@@ -80,21 +80,15 @@ const examOptionsDB = [];
 
 
 
-
-
 /* ------------DOM INITIALIZATIONS---------------- */
-
 
 
 //DOM initialization for the name value entered in the form on the index page.
 const fullNameValue = document.getElementById("fullName");
-
 //DOM initialization for the form error message on the index page.
 const errMsg2 = document.getElementById("passErrorMsg");
-
 //DOM initialization for populating the questions on the exam page.
 const examQuestion = document.getElementById("question");
-
 //DOM initialization for populating the option buttons on the exam page.
 const examOptionA = document.getElementById("opA");
 const examOptionB = document.getElementById("opB");
@@ -103,34 +97,16 @@ const examOptionD = document.getElementById("opD");
 
 //DOM initialization for the next button on the exam page.
 const nextButton = document.getElementById("nextBtn");
-
 //DOM initialization for the previous button on the exam page.
 const prevButton = document.getElementById("prevBtn");
-
 //DOM initialization for the submit button on the exam page.
 const submitButton = document.getElementById("submit");
-
 //DOM initialization for the exam timer at the top left of the exam page.
 const examTimer = document.getElementById("timer1");
-
 //DOM initialization for the timer message at the bottom of the exam page.
 const quizWarnText = document.getElementById("warnText");
-
-/*DOM initialization for displaying the score progress of the exam on the exam page.
-I have removed the display with the setInterval function. */
-const scoreTextUpload = document.getElementById("scoreText");
-setInterval(() => {
-    scoreTextUpload.style.display = "none";
-}, 1000);
-
-
 //DOM initialization for the final exam score display on the score page.
 const scorePrint = document.getElementById("scorePrintOut");
-
-
-
-
-
 
 
 
@@ -138,41 +114,39 @@ const scorePrint = document.getElementById("scorePrintOut");
 /* -----------------FUNCTIONS AND DECLARATIONS----------------- */
 
 
-
 /*Function for displaying a blank space three seconds after the error message has displayed, 
 in the index page form, during form validation.*/
-alertTimeOut = () => {
+let alertTimeOut = () => {
     setTimeout(() => {
         errMsg2.innerHTML = "<span class='text-light'>blank</span>";
     }, 3000)
 };
-
 /*Initialization of the indices of the objects in the examData array(for populating the questions and options),
 which will be used in reference to the examOptionDB array, when injecting data into it. */
 let currentQuestion = 0;
-
+const optionID = [examOptionA, examOptionB, examOptionC, examOptionD];
 //Function for loading the exam questions and options. Will be called later on.
-loadExam = () => {
+let loadExam = () => {
     let myExam = examData[currentQuestion];
     examQuestion.innerHTML = myExam.question;
-    examOptionA.innerHTML = myExam.optionA;
-    examOptionB.innerHTML = myExam.optionB;
-    examOptionC.innerHTML = myExam.optionC;
-    examOptionD.innerHTML = myExam.optionD;  
+    optionID[0].innerHTML = myExam.optionA;
+    optionID[1].innerHTML = myExam.optionB;
+    optionID[2].innerHTML = myExam.optionC;
+    optionID[3].innerHTML = myExam.optionD;  
 };
 
 let t = 0;
 //Function for maintaining a blank text space where the error messages for the index page form, should display.
-blankErrMsg = () =>{
+let blankErrMsg = () =>{
     setInterval(() => {
         t++;
         errMsg2.innerHTML = "<span class='text-light'>blank</span>";    
     }, 1000);
 }
-blankErrMsg();
+// blankErrMsg();
 
 //Function for validating the form on the index page.
-cbtValidate = () => {
+let cbtValidate = () => {
     if(document.cbtForm.emailForm.value == "" && document.cbtForm.passwordForm.value == "" && fullNameValue.value == ""){
         errMsg2.innerHTML = "All fields must be filled!" 
         event.preventDefault();
@@ -202,18 +176,15 @@ cbtValidate = () => {
 };
 
 
-
 let time1 = 0;
 //Function for displaying the final exam score on the score page.
-printScore = () => {
+let printScore = () => {
     setInterval(() => {
         time1++;
         scorePrint.innerHTML = `<span class="text-info">${localStorage.getItem("nameVal")}</span>, your exam score is <span class="text-info">${localStorage.getItem("scoreVal")}/50.</span>`;
     }, 1000);
 }
-
-printScore();
-
+// printScore();
 
 
 //Declarations for the exam timer function.
@@ -224,11 +195,11 @@ let hrs2 = 0;
 let setInt3 = 0;
 
 //Function for the countdown timer during the exam, which when it gets to zero, it will load the score page.
-examCountDownTimer = () => {
+let examCountDownTimer = () => {
    setInt3 = setInterval(() => {
     b--;
     quizWarnText.innerHTML = `You have <span style="color: goldenrod">${hrs2} hours, ${mins2} minutes and ${sec2} 
-    seconds</span> left, after which your exam will be terminated and you will be directed to your score page.`
+    seconds</span> left, after which your exam will be terminated and you will be directed to your score page. ${currentQuestion}`
     sec2 = Math.floor(b % 3600 % 60 );
     mins2 = Math.floor(b % 3600 / 60);
     hrs2 = Math.floor(b / 3600);
@@ -281,17 +252,37 @@ examCountDownTimer = () => {
 examCountDownTimer();
 
 
-
 //Declaring the variable 'option' which will be used to determine whether an option has been selected or not.
 let option = 0;
+//Declaring the variable which will be used to determine which option has been selected.
+let optionSelector;
+let otherOptionSelector1;
+let otherOptionSelector2;
+let otherOptionSelector3;
 
 /*Declarations for the exam options(buttons) functions, which will be used to determine
 whether an option which was selected is the correct answer or not.*/
-let examOptionAvalue = 0;
-let examOptionBvalue = 0;
-let examOptionCvalue = 0;
-let examOptionDvalue = 0;
+let examOptionAvalue;
+let examOptionBvalue;
+let examOptionCvalue;
+let examOptionDvalue;
 
+//Array for option answer values.
+const examOptionID = [examOptionAvalue, examOptionBvalue, examOptionCvalue, examOptionDvalue];
+
+//Function for option answer values. Initially it was just an array but it wasn't reiterating its check on the currentQuestion variable,
+//and so remained at the initialization value throughout the run of the CBT. When I used a function and called it in the Next AddEventListener,
+//Each function call make a check!
+let examArrayOptionFunction = () => {
+	let examArrayOptionID = [
+	    examData[currentQuestion].optionA,
+	    examData[currentQuestion].optionB,
+	    examData[currentQuestion].optionC,
+	    examData[currentQuestion].optionD
+	    ];
+
+    return examArrayOptionID;
+}
 
 
 
@@ -302,86 +293,64 @@ let examOptionDvalue = 0;
 /* ---------------OPTION BUTTONS EVENT HANDLERS--------------- */
 
 
-
 /*Event handler function for assigning data to the first option when clicked, which will be used to determine
 whether the option selected was the right answer or not, and for color styling,
 differentiating it from other non-selected buttons.*/
-optionSelect1 = () => {
-    option = 1;
-    examOptionAvalue = examData[currentQuestion].optionA;
-    examOptionBvalue = "";
-    examOptionCvalue = "";
-    examOptionDvalue = "";
-    examOptionA.style.backgroundImage = "linear-gradient(rgba(92, 65, 6, 0.4), rgb(92, 65, 6, 1.0))";
+let optionColorReset = () => {
+    examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
     examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
     examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
     examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
 }
-
-/*Event handler function for assigning data to the second option when clicked, which will be used to determine
-whether the option selected was the right answer or not, and for color styling,
-differentiating it from other non-selected buttons.*/
-optionSelect2 = () => {
+let optionFunct = () => {
     option = 1;
-    examOptionBvalue = examData[currentQuestion].optionB;
-    examOptionAvalue = "";
-    examOptionCvalue = "";
-    examOptionDvalue = "";
-    examOptionB.style.backgroundImage = "linear-gradient(rgba(92, 65, 6, 0.4), rgb(92, 65, 6, 1.0))";
-    examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-    examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-    examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
+    examOptionID[optionSelector] = examArrayOptionFunction()[optionSelector]
+    examOptionID[otherOptionSelector1] = "";
+    examOptionID[otherOptionSelector2] = "";
+    examOptionID[otherOptionSelector3] = "";
+    optionID[optionSelector].style.backgroundImage = "linear-gradient(rgba(92, 65, 6, 0.4), rgb(92, 65, 6, 1.0))";
+    optionID[otherOptionSelector1].style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
+    optionID[otherOptionSelector2].style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
+    optionID[otherOptionSelector3].style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
 }
 
-/*Event handler function for assigning data to the third option when clicked, which will be used to determine
-whether the option selected was the right answer or not, and for color styling,
-differentiating it from other non-selected buttons.*/
-optionSelect3 = () => {
-    option = 1;
-    examOptionCvalue = examData[currentQuestion].optionC;
-    examOptionBvalue = "";
-    examOptionAvalue = "";
-    examOptionDvalue = "";
-    examOptionC.style.backgroundImage = "linear-gradient(rgba(92, 65, 6, 0.4), rgb(92, 65, 6, 1.0))";
-    examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-    examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-    examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-}
-
-/*Event handler function for assigning data to the fourth option when clicked, which will be used to determine
-whether the option selected was the right answer or not, and for color styling,
-differentiating it from other non-selected buttons.*/
-optionSelect4 = () => {
-    option = 1;
-    examOptionDvalue = examData[currentQuestion].optionD;
-    examOptionBvalue = "";
-    examOptionCvalue = "";
-    examOptionAvalue = "";
-    examOptionD.style.backgroundImage = "linear-gradient(rgba(92, 65, 6, 0.4), rgb(92, 65, 6, 1.0))";
-    examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-    examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-    examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-}
-
-
-
-
-
+examOptionA.addEventListener('click', () => {
+    optionSelector = 0;
+    otherOptionSelector1 = 1;
+    otherOptionSelector2 = 2;
+    otherOptionSelector3 = 3;
+    optionFunct();
+});
+examOptionB.addEventListener('click', () => {
+    optionSelector = 1;
+    otherOptionSelector1 = 2;
+    otherOptionSelector2 = 3;
+    otherOptionSelector3 = 0;
+    optionFunct()
+});
+examOptionC.addEventListener('click', () => {
+    optionSelector = 2;
+    otherOptionSelector1 = 3;
+    otherOptionSelector2 = 0;
+    otherOptionSelector3 = 1;
+    optionFunct()
+});
+examOptionD.addEventListener('click', () => {
+    optionSelector = 3;
+    otherOptionSelector1 = 0;
+    otherOptionSelector2 = 1;
+    otherOptionSelector3 = 2;
+    optionFunct()
+});
 
 
 
 //Exam loader function called.
 loadExam();
-
 //The submit button display is disabled to only show up at the last question.
 submitButton.style.display = "none";
-
 //Exam score variable declared
 let examScore = 0;
-
-
-
-
 
 
 
@@ -389,341 +358,95 @@ let examScore = 0;
 /*---------------EVENT HANDLERS FOR THE EXAM PAGE---------------*/
 
 
-
 //Next button event handler for describing the actions to be executed when the next button is clicked.
-nextButton.addEventListener("click", function () {
+nextButton.addEventListener("click", () => {
     //When no option is selected, pop an alert saying you must click an option.
     if (currentQuestion < examData.length && option == 0) {
         alert("You must select an option");
     }
 
-    //When the first option is selected and that option is the correct answer and it has not been selected before.
+    //When an option is selected and that option is the correct answer and it has not been selected before.
     else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionAvalue == examData[currentQuestion].correctAnswer && 
+        examOptionID[optionSelector] == examData[currentQuestion].correctAnswer && 
         examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        examScore += 5;
-        option = 0;
-        //In the line of code below, data is assigned to the examOptionDB array, indexed to the current question.
-        examOptionsDB[currentQuestion] = examData[currentQuestion].correctAnswer;
-        currentQuestion++;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        loadExam();
-        console.log(examOptionsDB);
-    }
-    //When the second option is selected and that option is the correct answer and it has not been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionBvalue == examData[currentQuestion].correctAnswer && 
-        examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        examScore += 5;
-        option = 0;
-        //In the line of code below, data is assigned to the examOptionDB array, indexed to the current question.
-        examOptionsDB[currentQuestion] = examData[currentQuestion].correctAnswer;
-        currentQuestion++;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        loadExam();
-        console.log(examOptionsDB);
-    }
-    //When the third option is selected and that option is the correct answer and it has not been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionCvalue == examData[currentQuestion].correctAnswer && 
-        examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        examScore += 5;
-        option = 0;
-        //In the line of code below, data is assigned to the examOptionDB array, indexed to the current question.
-        examOptionsDB[currentQuestion] = examData[currentQuestion].correctAnswer;
-        currentQuestion++;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        loadExam();
-        console.log(examOptionsDB);
-    }
-    //When the fourth option is selected and that option is the correct answer and it has not been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionDvalue == examData[currentQuestion].correctAnswer && 
-        examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        examScore += 5;
-        option = 0;
-        //In the line of code below, data is assigned to the examOptionDB array, indexed to the current question index.
-        examOptionsDB[currentQuestion] = examData[currentQuestion].correctAnswer;
-        currentQuestion++;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        loadExam();
-        console.log(examOptionsDB);
-    }
-
-
-    //When the first option is selected and that option is the correct answer and it has been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionAvalue == examData[currentQuestion].correctAnswer && 
-        examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        option = 0;
-        currentQuestion++;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        loadExam();
-        console.log(examOptionsDB);
-    }
-    //When the second option is selected and that option is the correct answer and it has been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionBvalue == examData[currentQuestion].correctAnswer && 
-        examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        option = 0;
-        currentQuestion++;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        loadExam();
-        console.log(examOptionsDB);
-    }
-    //When the third option is selected and that option is the correct answer and it has been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionCvalue == examData[currentQuestion].correctAnswer && 
-        examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        option = 0;
-        currentQuestion++;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        loadExam();
-        console.log(examOptionsDB);
-    }
-    //When the fourth option is selected and that option is the correct answer and it has been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionDvalue == examData[currentQuestion].correctAnswer && 
-        examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        option = 0;
-        currentQuestion++;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        loadExam();
-        console.log(examOptionsDB);
-    }
-
-
-    //When the first option is selected and that option is the wrong answer and it has not been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionAvalue != examData[currentQuestion].correctAnswer && examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        option = 0;
-        examOptionsDB[currentQuestion] = null;
-        currentQuestion++;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        loadExam();
-        console.log(examOptionsDB);
-    }
-    //When the second option is selected and that option is the wrong answer and it has not been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionBvalue != examData[currentQuestion].correctAnswer && examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        option = 0;
-        examOptionsDB[currentQuestion] = null;
-        currentQuestion++;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        loadExam();
-        console.log(examOptionsDB);
-    }
-    //When the third option is selected and that option is the wrong answer and it has not been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionCvalue != examData[currentQuestion].correctAnswer && examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
         
-        option = 0;
-        examOptionsDB[currentQuestion] = null;
-        currentQuestion++;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        loadExam();
-        console.log(examOptionsDB);
-    }
-    //When the fourth option is selected and that option is the wrong answer and it has not been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionDvalue != examData[currentQuestion].correctAnswer && examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
         submitButton.style.display = "none";
+        examScore += 5;
+        option = 0;
+        //In the line of code below, data is assigned to the examOptionDB array, indexed to the current question.
+        examOptionsDB[currentQuestion] = examData[currentQuestion].correctAnswer;
+        console.log(examOptionsDB);
+        console.log(examArrayOptionFunction()[optionSelector]);
+        console.log(examArrayOptionFunction());
+        console.log(currentQuestion);
+        currentQuestion++;
+        optionColorReset();
+        loadExam();
+    }
+
+    //When an option is selected and that option is the correct answer and it has been selected before.
+    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
+        examOptionID[optionSelector] == examData[currentQuestion].correctAnswer && 
+        examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
         
+        submitButton.style.display = "none";
         option = 0;
-        examOptionsDB[currentQuestion] = null;
         currentQuestion++;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
+        optionColorReset();
         loadExam();
         console.log(examOptionsDB);
     }
 
-
-    //When the first option is selected and that option is the wrong answer and it has been selected before.
+    //When an option is selected and that option is the wrong answer and it has not been selected before.
     else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionAvalue != examData[currentQuestion].correctAnswer && 
-        examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
+        examOptionID[optionSelector] != examData[currentQuestion].correctAnswer && 
+        examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
+        
         submitButton.style.display = "none";
-        examScore -= 5;
         option = 0;
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        /*In the line of code below, data type null is assigned to the array item indexed to the current question 'index'.
-        This will change the value and subtract the score for that question, so that if it is answered correctly
-        on another attempt, it will increment the score.*/
         examOptionsDB[currentQuestion] = null;
-        currentQuestion++;
-        loadExam();
         console.log(examOptionsDB);
-    }
-    //When the second option is selected and that option is the wrong answer and it has been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionBvalue != examData[currentQuestion].correctAnswer && 
-        examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        examScore -= 5;
-        option = 0;
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        /*In the line of code below, data type null is assigned to the array item indexed to the current question 'index'.
-        This will change the value and subtract the score for that question, so that if it is answered correctly
-        on another attempt, it will increment the score.*/
-        examOptionsDB[currentQuestion] = null;
+        console.log(examArrayOptionFunction()[optionSelector]);
+        console.log(examArrayOptionFunction());
+        console.log(currentQuestion);
         currentQuestion++;
+        optionColorReset();
         loadExam();
-        console.log(examOptionsDB);
-    }
-    //When the third option is selected and that option is the wrong answer and it has been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionCvalue != examData[currentQuestion].correctAnswer && 
-        examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        examScore -= 5;
-        option = 0;
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        /*In the line of code below, data type null is assigned to the array item indexed to the current question 'index'.
-        This will change the value and subtract the score for that question, so that if it is answered correctly
-        on another attempt, it will increment the score.*/
-        examOptionsDB[currentQuestion] = null;
-        currentQuestion++;
-        loadExam();
-        console.log(examOptionsDB);
-    }
-    //When the fourth option is selected and that option is the wrong answer and it has been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
-        examOptionDvalue != examData[currentQuestion].correctAnswer && 
-        examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
-        submitButton.style.display = "none";
-        examScore -= 5;
-        option = 0;
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        /*In the line of code below, data type null is assigned to the array item indexed to the current question 'index'.
-        This will change the value and subtract the score for that question, so that if it is answered correctly
-        on another attempt, it will increment the score.*/
-        examOptionsDB[currentQuestion] = null;
-        currentQuestion++;
-        loadExam();
-        console.log(examOptionsDB);
+       
     }
 
+    //When an option is selected and that option is the wrong answer and it has been selected before.
+    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
+        examOptionID[optionSelector] != examData[currentQuestion].correctAnswer && 
+        examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
+        
+        submitButton.style.display = "none";
+        examScore -= 5;
+        option = 0;
+        optionColorReset();
+        /*In the line of code below, data type null is assigned to the array item indexed to the current question 'index'.
+        This will change the value and subtract the score for that question, so that if it is answered correctly
+        on another attempt, it will increment the score.*/
+        examOptionsDB[currentQuestion] = null;
+        currentQuestion++;
+        loadExam();
+        console.log(examOptionsDB);
+    }
 
     //When it is the last question and the first option is selected and it is the correct answer.
     else if (currentQuestion == examData.length - 1 && option == 1 &&
-        examOptionAvalue == examData[currentQuestion].correctAnswer){
+        examOptionID[optionSelector] == examData[currentQuestion].correctAnswer){
+        
         examScore += 5;
         examOptionsDB[currentQuestion] = examData[currentQuestion].correctAnswer;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
         submitButton.style.display = "block";
         prevButton.style.display = "none";
         nextButton.style.display = "none";
     }
-    //When it is the last question and the second option is selected and it is the correct answer.
-    else if (currentQuestion == examData.length - 1 && option == 1 &&
-        examOptionBvalue == examData[currentQuestion].correctAnswer){
-        examScore += 5;
-        examOptionsDB[currentQuestion] = examData[currentQuestion].correctAnswer;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        submitButton.style.display = "block";
-        prevButton.style.display = "none";
-        nextButton.style.display = "none";
-    }
-    //When it is the last question and the third option is selected and it is the correct answer.
-    else if (currentQuestion == examData.length - 1 && option == 1 &&
-        examOptionCvalue == examData[currentQuestion].correctAnswer){
-        examScore += 5;
-        examOptionsDB[currentQuestion] = examData[currentQuestion].correctAnswer;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        submitButton.style.display = "block";
-        prevButton.style.display = "none";
-        nextButton.style.display = "none";
-    }
-    //When it is the last question and the fourth option is selected and it is the correct answer.
-    else if (currentQuestion == examData.length - 1 && option == 1 &&
-        examOptionDvalue == examData[currentQuestion].correctAnswer){
-        examScore += 5;
-        examOptionsDB[currentQuestion] = examData[currentQuestion].correctAnswer;
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
-        submitButton.style.display = "block";
-        prevButton.style.display = "none";
-        nextButton.style.display = "none";
-    }
-
 
     //When it is the last question and any option selected is the wrong answer.
     else if (currentQuestion == examData.length - 1 && option == 1){
-        scoreTextUpload.innerHTML = `Your score is ${examScore}`
+
         submitButton.style.display = "block";
         prevButton.style.display = "none";
         nextButton.style.display = "none";
@@ -732,15 +455,13 @@ nextButton.addEventListener("click", function () {
 
 
 //Previous button event handler for describing the actions to be executed when the previous button is clicked.
-prevButton.addEventListener("click", function () {
+prevButton.addEventListener("click", () => {
     if (currentQuestion < examData.length && currentQuestion > 0){
+
         submitButton.style.display = "none";
         currentQuestion--;
         option = 0;
-        examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
-        examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
+        optionColorReset();
         loadExam();
     }
     else if (currentQuestion == 0) {
@@ -750,7 +471,9 @@ prevButton.addEventListener("click", function () {
 
 
 //Submit button event handler for describing the actions to be executed when the submit button is clicked.
-submitButton.addEventListener("click", function () {
+submitButton.addEventListener("click", () => {
     localStorage.setItem("scoreVal", examScore);
 });
 
+
+//<============================================END OF CODE===============================================>//
