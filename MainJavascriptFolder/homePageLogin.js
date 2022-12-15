@@ -21,8 +21,9 @@ let alertTimeOut = () => {
 
 /*Function for maintaining a blank text space where the error messages for the index page form,
 should display.*/
+let t = 0;
 let blankErrMsg = () =>{
-    setInterval((t) => {
+    setInterval(() => {
         t++;
         errMsg2.innerHTML = "<span class='text-light'>blank</span>";    
     }, 1000);
