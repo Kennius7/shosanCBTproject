@@ -1,5 +1,4 @@
 
-
 //DOM initialization for the name value entered in the form on the index page.
 export const fullNameValue = document.getElementById("fullName");
 //DOM initialization for the form error message on the index page.

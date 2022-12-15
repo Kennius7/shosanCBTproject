@@ -2,8 +2,13 @@
 
 import { examData } from "./examQuestionData.js";
 import { examCountDownTimer } from "./examCountDownTimer.js";
-import { fullNameValue, errMsg2, loginButton, nextButton, prevButton, submitButton, scorePrint } from "./DOM_Init.js";
-import { optionEventListener, optionColorReset, optionSelector, examOptionID } from "./optionBTNEventHandler.js";
+import { 
+        fullNameValue, errMsg2, loginButton, 
+        nextButton, prevButton, submitButton, 
+        scorePrint, examOptionA, examOptionB, 
+        examOptionC, examOptionD
+        } from "./DOM_Init.js";
+
 import { currentQuestion, loadExam } from "./examLoader.js";
 
 
@@ -80,11 +85,104 @@ let printScore = () => {
 // printScore();
 
 
-//Calling the exam timer function.
-// examCountDownTimer();
+//Importing and Calling the exam timer function from the Exam Timer module.
+examCountDownTimer();
 
-//Calling the option event handler function.
-optionEventListener();
+
+
+//Declaring the variable 'option' which will be used to determine whether an option has been selected or not.
+let option = 0;
+
+
+//Declaring the variables which will be used to determine which options have been selected and which haven't.
+let optionSelector;
+let otherOptionSelector1;
+let otherOptionSelector2;
+let otherOptionSelector3;
+
+/*Declarations for the exam options(buttons) functions, which will be used to determine whether an option
+which was selected is the correct answer or not.*/
+let examOptionAvalue;
+let examOptionBvalue;
+let examOptionCvalue;
+let examOptionDvalue;
+
+//Creating an Array for option answer values so they can be iterated.
+const examOptionID = [examOptionAvalue, examOptionBvalue, examOptionCvalue, examOptionDvalue];
+
+/*Creating a function for option answer values. Initially it was just an array but it wasn't reiterating
+its check on the (currentQuestion) variable, and so remained at the initialization value throughout the run
+of the CBT. When I used a function and called it in the Next AddEventListener, each function call made a 
+check!*/
+let examArrayOptionFunction = () => {
+    let examArrayOptionID = [
+        examData[currentQuestion].optionA,
+        examData[currentQuestion].optionB,
+        examData[currentQuestion].optionC,
+        examData[currentQuestion].optionD
+        ];
+
+    return examArrayOptionID;
+}
+
+
+/* =====================================OPTION BUTTONS EVENT HANDLERS==================================== */
+
+
+/*Creating functions for assigning data to the options when clicked, which will be used to determine whether
+the option selected was the right answer or not, and for color styling, differentiating it from other
+non-selected buttons, and for reseting the button colors when the next question loads.*/
+let optionColorReset = () => {
+    examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
+    examOptionB.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
+    examOptionC.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
+    examOptionD.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
+}
+let optionFunct = () => {
+    option = 1;
+    examOptionID[optionSelector] = examArrayOptionFunction()[optionSelector]
+    examOptionID[otherOptionSelector1] = "";
+    examOptionID[otherOptionSelector2] = "";
+    examOptionID[otherOptionSelector3] = "";
+    optionID[optionSelector].style.backgroundImage = "linear-gradient(rgba(92, 65, 6, 0.4), rgb(92, 65, 6, 1.0))";
+    optionID[otherOptionSelector1].style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
+    optionID[otherOptionSelector2].style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
+    optionID[otherOptionSelector3].style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
+}
+
+
+//Option button event listeners functions
+    examOptionA.addEventListener('click', () => {
+        optionSelector = 0;
+        otherOptionSelector1 = 1;
+        otherOptionSelector2 = 2;
+        otherOptionSelector3 = 3;
+        optionFunct();
+    });
+    examOptionB.addEventListener('click', () => {
+        optionSelector = 1;
+        otherOptionSelector1 = 2;
+        otherOptionSelector2 = 3;
+        otherOptionSelector3 = 0;
+        optionFunct();
+    });
+    examOptionC.addEventListener('click', () => {
+        optionSelector = 2;
+        otherOptionSelector1 = 3;
+        otherOptionSelector2 = 0;
+        otherOptionSelector3 = 1;
+        optionFunct();
+    });
+    examOptionD.addEventListener('click', () => {
+        optionSelector = 3;
+        otherOptionSelector1 = 0;
+        otherOptionSelector2 = 1;
+        otherOptionSelector3 = 2;
+        optionFunct();
+    });
+
+
+
 
 
 
@@ -108,18 +206,18 @@ let examScore = 0;
 //Next button event handler for describing the actions to be executed when the next button is clicked.
 nextButton.addEventListener("click", () => {
     //======>When no option is selected, pop an alert saying you must click an option.
-    if (currentQuestion < examData.length && optionFunction == 0) {
+    if (currentQuestion < examData.length && option == 0) {
         alert("You must select an option");
     }
 
     //======>When an option is selected and that option is the correct answer and it has not been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && optionFunction() == 1 && 
+    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
         examOptionID[optionSelector] == examData[currentQuestion].correctAnswer && 
         examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
         
         submitButton.style.display = "none";
         examScore += 5;
-        optionFunction(0);
+        option = 0;
         //In the line of code below, data is assigned to the examOptionDB array, indexed to the current question.
         examOptionsDB[currentQuestion] = examData[currentQuestion].correctAnswer;
         currentQuestion++;
@@ -128,24 +226,24 @@ nextButton.addEventListener("click", () => {
     }
 
     //======>When an option is selected and that option is the correct answer and it has been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && optionFunction == 1 && 
+    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
         examOptionID[optionSelector] == examData[currentQuestion].correctAnswer && 
         examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
         
         submitButton.style.display = "none";
-        optionFunction(0);
+        option = 0;
         currentQuestion++;
         optionColorReset();
         loadExam();
     }
 
     //======>When an option is selected and that option is the wrong answer and it has not been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && optionFunction == 1 && 
+    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
         examOptionID[optionSelector] != examData[currentQuestion].correctAnswer && 
         examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
         
         submitButton.style.display = "none";
-        optionFunction(0);
+        option = 0;
         examOptionsDB[currentQuestion] = null;
         currentQuestion++;
         optionColorReset();
@@ -153,13 +251,13 @@ nextButton.addEventListener("click", () => {
     }
 
     //======>When an option is selected and that option is the wrong answer and it has been selected before.
-    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && optionFunction == 1 && 
+    else if (currentQuestion >= 0 && currentQuestion < examData.length - 1 && option == 1 && 
         examOptionID[optionSelector] != examData[currentQuestion].correctAnswer && 
         examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
         
         submitButton.style.display = "none";
         examScore -= 5;
-        optionFunction(0);
+        option = 0;
         optionColorReset();
         /*In the line of code below, data type null is assigned to the array item indexed to the current question 'index'.
         This will change the value and subtract the score for that question, so that if it is answered correctly
@@ -170,7 +268,7 @@ nextButton.addEventListener("click", () => {
     }
 
     //======>When it is the last question and the first option is selected and it is the correct answer.
-    else if (currentQuestion == examData.length - 1 && optionFunction == 1 &&
+    else if (currentQuestion == examData.length - 1 && option == 1 &&
         examOptionID[optionSelector] == examData[currentQuestion].correctAnswer){
         
         examScore += 5;
@@ -181,7 +279,7 @@ nextButton.addEventListener("click", () => {
     }
 
     //======>When it is the last question and any option selected is the wrong answer.
-    else if (currentQuestion == examData.length - 1 && optionFunction == 1){
+    else if (currentQuestion == examData.length - 1 && option == 1){
 
         submitButton.style.display = "block";
         prevButton.style.display = "none";
