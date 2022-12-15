@@ -1,5 +1,6 @@
 import { quizWarnText, examTimer } from "./DOM_Init.js";
 
+
 //Creating variables for the exam countdown timer function.
 let b = 300;
 let sec2 = 0;
@@ -63,3 +64,6 @@ export let examCountDownTimer = () => {
     window.location.href = "scorePage.html";
 }, 303000);
 }
+
+
+

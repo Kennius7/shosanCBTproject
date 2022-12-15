@@ -1,18 +1,7 @@
-"use strict"
-
 import { examData } from "./examQuestionData.js";
+import { nextButton, prevButton, submitButton, scorePrint, examQuestion,
+        examOptionA, examOptionB, examOptionC, examOptionD } from "./DOM_Init.js";
 import { examCountDownTimer } from "./examCountDownTimer.js";
-import { 
-        fullNameValue, errMsg2, loginButton, 
-        nextButton, prevButton, submitButton, 
-        scorePrint, examOptionA, examOptionB, 
-        examOptionC, examOptionD
-        } from "./DOM_Init.js";
-
-import { currentQuestion, loadExam } from "./examLoader.js";
-
-
-
 
 
 
@@ -24,69 +13,20 @@ const examOptionsDB = [];
 
 /* ====================================FUNCTIONS AND DECLARATIONS====================================== */
 
-/*Function for displaying a blank space three seconds after the error message has displayed, 
-in the index page form, during form validation.*/
-let alertTimeOut = () => {
-    setTimeout(() => {
-        errMsg2.innerHTML = "<span class='text-light'>blank</span>";
-    }, 3000)
+
+/*Initialization of the indices of the objects in the examData array(for populating the questions and options),
+which will be used in reference to the examOptionDB array, when injecting data into it. */
+let currentQuestion = 0;
+const optionID = [examOptionA, examOptionB, examOptionC, examOptionD];
+//Function for loading the exam questions and options. Will be called later down the code.
+let loadExam = () => {
+    let myExam = examData[currentQuestion];
+    examQuestion.innerHTML = myExam.question;
+    optionID[0].innerHTML = myExam.optionA;
+    optionID[1].innerHTML = myExam.optionB;
+    optionID[2].innerHTML = myExam.optionC;
+    optionID[3].innerHTML = myExam.optionD;  
 };
-
-/*Function for maintaining a blank text space where the error messages for the index page form,
-should display.*/
-let t = 0;
-let blankErrMsg = () =>{
-    setInterval(() => {
-        t++;
-        errMsg2.innerHTML = "<span class='text-light'>blank</span>";    
-    }, 1000);
-}
-// blankErrMsg();
-
-//Function for validating the form on the index page.
-loginButton.addEventListener('click', () => {
-    if(document.cbtForm.emailForm.value == "" && document.cbtForm.passwordForm.value == "" && fullNameValue.value == ""){
-        errMsg2.innerHTML = "All fields must be filled!" 
-        event.preventDefault();
-        alertTimeOut();
-        }
-    else if(document.cbtForm.emailForm.value == "" && document.cbtForm.passwordForm.value != "exam" && fullNameValue.value == ""){
-        errMsg2.innerHTML = "All fields must be filled!" 
-        event.preventDefault();
-        alertTimeOut();
-        }
-    else if(document.cbtForm.emailForm.value != "" && 
-        document.cbtForm.passwordForm.value != "exam" && document.cbtForm.passwordForm.value != "" && 
-        fullNameValue.value != ""){
-        errMsg2.innerHTML = "Incorrect Password!"
-        event.preventDefault();
-        alertTimeOut();
-        }
-    else if(document.cbtForm.emailForm.value == "" || document.cbtForm.passwordForm.value == "" || fullNameValue.value == ""){
-        errMsg2.innerHTML = "All fields must be filled!"
-        event.preventDefault();
-        alertTimeOut();
-        }
-    else if(document.cbtForm.emailForm.value != "" && document.cbtForm.passwordForm.value == "exam" && fullNameValue.value != "") {
-        localStorage.setItem("nameVal", fullNameValue.value);
-        console.log("Success");
-        }
-})
-
-
-//Function for displaying the final exam score on the score page.
-let time1 = 0;
-let printScore = () => {
-    setInterval(() => {
-        time1++;
-        scorePrint.innerHTML = `<span class="text-info">${localStorage.getItem("nameVal")}</span>, your exam score is <span class="text-info">${localStorage.getItem("scoreVal")}/50.</span>`;
-    }, 1000);
-}
-// printScore();
-
-
-//Importing and Calling the exam timer function from the Exam Timer module.
-examCountDownTimer();
 
 
 
@@ -194,8 +134,9 @@ loadExam();
 //The submit button display is disabled to only show up at the last question.
 submitButton.style.display = "none";
 //Exam score variable declared
-let examScore = 0;
+export let examScore = 0;
 
+examCountDownTimer();
 
 
 
@@ -308,6 +249,17 @@ prevButton.addEventListener("click", () => {
 submitButton.addEventListener("click", () => {
     localStorage.setItem("scoreVal", examScore);
 });
+
+
+//Function for displaying the final exam score on the score page.
+let time1 = 0;
+let printScore = () => {
+    setInterval(() => {
+        time1++;
+        scorePrint.innerHTML = `<span class="text-info">${localStorage.getItem("nameVal")}</span>, your exam score is <span class="text-info">${localStorage.getItem("scoreVal")}/50.</span>`;
+    }, 1000);
+}
+printScore();
 //
 //
 //
