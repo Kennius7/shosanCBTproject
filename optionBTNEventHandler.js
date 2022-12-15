@@ -1,5 +1,3 @@
-"use strict"
-
 import { examOptionA, examOptionB, examOptionC, examOptionD } from "./DOM_Init.js";
 import { examData } from "./examQuestionData.js";
 import { currentQuestion, optionID } from "./examLoader.js";
@@ -9,7 +7,11 @@ import { currentQuestion, optionID } from "./examLoader.js";
 
 
 //Declaring the variable 'option' which will be used to determine whether an option has been selected or not.
-export let optionFunction = (option) => { return option }
+export let optionFunction = (option) => { 
+    setInterval(() => {
+        return option   
+    }, 1000);
+}
 //Declaring the variables which will be used to determine which options have been selected and which haven't.
 export let optionSelector;
 export let otherOptionSelector1;
@@ -65,9 +67,9 @@ export let optionFunct = () => {
     optionID[otherOptionSelector2].style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
     optionID[otherOptionSelector3].style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
 }
+
+
 /*Option button event listeners functions*/
-
-
 export function optionEventListener() {
     examOptionA.addEventListener('click', () => {
         optionSelector = 0;

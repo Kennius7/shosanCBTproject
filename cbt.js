@@ -3,9 +3,8 @@
 import { examData } from "./examQuestionData.js";
 import { examCountDownTimer } from "./examCountDownTimer.js";
 import { fullNameValue, errMsg2, nextButton, prevButton, submitButton, scorePrint } from "./DOM_Init.js";
-import { optionEventListener, optionColorReset, optionSelector, examOptionID } from "./optionBTNEventHandler.js";
+import { optionEventListener, optionColorReset, optionSelector, examOptionID, optionFunction } from "./optionBTNEventHandler.js";
 import { currentQuestion, loadExam } from "./examLoader.js";
-import { optionFunction } from "./optionBTNEventHandler.js";
 
 
 
@@ -97,6 +96,7 @@ loadExam();
 submitButton.style.display = "none";
 //Exam score variable declared
 let examScore = 0;
+
 
 
 
