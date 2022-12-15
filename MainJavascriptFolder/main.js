@@ -1,19 +1,24 @@
 import { examData } from "./examQuestionData.js";
-import { nextButton, prevButton, submitButton, scorePrint, examQuestion,
+import { nextButton, prevButton, submitButton, examQuestion,
         examOptionA, examOptionB, examOptionC, examOptionD } from "./DOM_Init.js";
 import { examCountDownTimer } from "./examCountDownTimer.js";
 
-
-
-
-//Empty array that will serve as a mini database for the option data inputs and will be used for validation.
-const examOptionsDB = [];
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//======================================================================================================//
 
 
 /* ====================================FUNCTIONS AND DECLARATIONS====================================== */
 
 
+//Empty array that will serve as a mini database for the option data inputs and will be used for validation.
+const examOptionsDB = [];
 /*Initialization of the indices of the objects in the examData array(for populating the questions and options),
 which will be used in reference to the examOptionDB array, when injecting data into it. */
 let currentQuestion = 0;
@@ -28,11 +33,8 @@ let loadExam = () => {
     optionID[3].innerHTML = myExam.optionD;  
 };
 
-
-
 //Declaring the variable 'option' which will be used to determine whether an option has been selected or not.
 let option = 0;
-
 
 //Declaring the variables which will be used to determine which options have been selected and which haven't.
 let optionSelector;
@@ -65,6 +67,16 @@ let examArrayOptionFunction = () => {
     return examArrayOptionID;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//======================================================================================================//
+
 
 /* =====================================OPTION BUTTONS EVENT HANDLERS==================================== */
 
@@ -89,7 +101,6 @@ let optionFunct = () => {
     optionID[otherOptionSelector2].style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
     optionID[otherOptionSelector3].style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
 }
-
 
 //Option button event listeners functions
     examOptionA.addEventListener('click', () => {
@@ -121,9 +132,15 @@ let optionFunct = () => {
         optionFunct();
     });
 
-
-
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//======================================================================================================//
 
 
 
@@ -135,8 +152,18 @@ loadExam();
 submitButton.style.display = "none";
 //Exam score variable declared
 export let examScore = 0;
-
+//Importing and calling the exam countdown timer function.
 examCountDownTimer();
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//======================================================================================================//
 
 
 
@@ -228,6 +255,15 @@ nextButton.addEventListener("click", () => {
     }
 });
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//======================================================================================================//
 
 //Previous button event handler for describing the actions to be executed when the previous button is clicked.
 prevButton.addEventListener("click", () => {
@@ -244,26 +280,31 @@ prevButton.addEventListener("click", () => {
     }
 });
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//======================================================================================================//
 
 //Submit button event handler for describing the actions to be executed when the submit button is clicked.
 submitButton.addEventListener("click", () => {
     localStorage.setItem("scoreVal", examScore);
+    window.location.href = "scorePage.html"
 });
 
 
-//Function for displaying the final exam score on the score page.
-let time1 = 0;
-let printScore = () => {
-    setInterval(() => {
-        time1++;
-        scorePrint.innerHTML = `<span class="text-info">${localStorage.getItem("nameVal")}</span>, your exam score is <span class="text-info">${localStorage.getItem("scoreVal")}/50.</span>`;
-    }, 1000);
-}
-printScore();
-//
-//
-//
-//
-//
-//
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
 //============================================END OF CODE===============================================//
+
+

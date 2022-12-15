@@ -1,6 +1,14 @@
 import { fullNameValue, errMsg2, loginButton } from "./DOM_Init.js";
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//======================================================================================================//
 
 
 /*Function for displaying a blank space three seconds after the error message has displayed, 
@@ -13,14 +21,13 @@ let alertTimeOut = () => {
 
 /*Function for maintaining a blank text space where the error messages for the index page form,
 should display.*/
-let t = 0;
 let blankErrMsg = () =>{
-    setInterval(() => {
+    setInterval((t) => {
         t++;
         errMsg2.innerHTML = "<span class='text-light'>blank</span>";    
     }, 1000);
 }
-// blankErrMsg();
+blankErrMsg();
 
 
 
@@ -53,4 +60,14 @@ loginButton.addEventListener('click', () => {
         console.log("Success");
         }
 })
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//                                                                                                      //
+//======================================================================================================//
 

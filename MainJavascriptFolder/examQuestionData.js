@@ -1,7 +1,5 @@
 //Array of objects that holds the exam questions and correct answers data.
 
-
-
 export const examData = [
     {question: "1. What is the capital of Argentina?",
      optionA: "1. Montevideo",
