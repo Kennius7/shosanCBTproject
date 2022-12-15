@@ -6,12 +6,16 @@ import { currentQuestion, optionID } from "./examLoader.js";
 
 
 
+let option = 0;
+
 //Declaring the variable 'option' which will be used to determine whether an option has been selected or not.
-export let optionFunction = (option) => { 
-    setInterval(() => {
-        return option   
-    }, 1000);
-}
+
+// export let optionFunction = () => { 
+//     setInterval(() => {
+//         return option   
+//     }, 1000);
+// }
+
 //Declaring the variables which will be used to determine which options have been selected and which haven't.
 export let optionSelector;
 export let otherOptionSelector1;

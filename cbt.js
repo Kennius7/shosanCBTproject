@@ -2,8 +2,8 @@
 
 import { examData } from "./examQuestionData.js";
 import { examCountDownTimer } from "./examCountDownTimer.js";
-import { fullNameValue, errMsg2, nextButton, prevButton, submitButton, scorePrint } from "./DOM_Init.js";
-import { optionEventListener, optionColorReset, optionSelector, examOptionID, optionFunction } from "./optionBTNEventHandler.js";
+import { fullNameValue, errMsg2, loginButton, nextButton, prevButton, submitButton, scorePrint } from "./DOM_Init.js";
+import { optionEventListener, optionColorReset, optionSelector, examOptionID } from "./optionBTNEventHandler.js";
 import { currentQuestion, loadExam } from "./examLoader.js";
 
 
@@ -39,7 +39,7 @@ let blankErrMsg = () =>{
 // blankErrMsg();
 
 //Function for validating the form on the index page.
-let cbtValidate = () => {
+loginButton.addEventListener('click', () => {
     if(document.cbtForm.emailForm.value == "" && document.cbtForm.passwordForm.value == "" && fullNameValue.value == ""){
         errMsg2.innerHTML = "All fields must be filled!" 
         event.preventDefault();
@@ -66,7 +66,8 @@ let cbtValidate = () => {
         localStorage.setItem("nameVal", fullNameValue.value);
         console.log("Success");
         }
-};
+})
+
 
 //Function for displaying the final exam score on the score page.
 let time1 = 0;
@@ -80,7 +81,7 @@ let printScore = () => {
 
 
 //Calling the exam timer function.
-examCountDownTimer();
+// examCountDownTimer();
 
 //Calling the option event handler function.
 optionEventListener();

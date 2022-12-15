@@ -12,6 +12,8 @@ export const examOptionB = document.getElementById("opB");
 export const examOptionC = document.getElementById("opC");
 export const examOptionD = document.getElementById("opD");
 
+//DOM initialization for the login button on the home page.
+export const loginButton = document.getElementById("loginBtn");
 //DOM initialization for the next button on the exam page.
 export const nextButton = document.getElementById("nextBtn");
 //DOM initialization for the previous button on the exam page.
