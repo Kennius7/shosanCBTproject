@@ -155,6 +155,13 @@ export let examScore = 0;
 //Importing and calling the exam countdown timer function.
 examCountDownTimer();
 
+let examQuestionSwitcher = () => {
+    option = 0;
+    currentQuestion++;
+    optionColorReset();
+    loadExam();
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                      //
 //                                                                                                      //
@@ -185,12 +192,9 @@ nextButton.addEventListener("click", () => {
         
         submitButton.style.display = "none";
         examScore += 5;
-        option = 0;
         //In the line of code below, data is assigned to the examOptionDB array, indexed to the current question.
         examOptionsDB[currentQuestion] = examData[currentQuestion].correctAnswer;
-        currentQuestion++;
-        optionColorReset();
-        loadExam();
+        examQuestionSwitcher();
     }
 
     //======>When an option is selected and that option is the correct answer and it has been selected before.
@@ -199,10 +203,7 @@ nextButton.addEventListener("click", () => {
         examOptionsDB[currentQuestion] == examData[currentQuestion].correctAnswer){
         
         submitButton.style.display = "none";
-        option = 0;
-        currentQuestion++;
-        optionColorReset();
-        loadExam();
+        examQuestionSwitcher();
     }
 
     //======>When an option is selected and that option is the wrong answer and it has not been selected before.
@@ -211,11 +212,8 @@ nextButton.addEventListener("click", () => {
         examOptionsDB[currentQuestion] != examData[currentQuestion].correctAnswer){
         
         submitButton.style.display = "none";
-        option = 0;
         examOptionsDB[currentQuestion] = null;
-        currentQuestion++;
-        optionColorReset();
-        loadExam();
+        examQuestionSwitcher();
     }
 
     //======>When an option is selected and that option is the wrong answer and it has been selected before.
@@ -225,14 +223,11 @@ nextButton.addEventListener("click", () => {
         
         submitButton.style.display = "none";
         examScore -= 5;
-        option = 0;
-        optionColorReset();
         /*In the line of code below, data type null is assigned to the array item indexed to the current question 'index'.
         This will change the value and subtract the score for that question, so that if it is answered correctly
         on another attempt, it will increment the score.*/
         examOptionsDB[currentQuestion] = null;
-        currentQuestion++;
-        loadExam();
+        examQuestionSwitcher();
     }
 
     //======>When it is the last question and the first option is selected and it is the correct answer.
