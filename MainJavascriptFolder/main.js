@@ -20,7 +20,7 @@ import { examCountDownTimer } from "./examCountDownTimer.js";
 //Empty array that will serve as a mini database for the option data inputs and will be used for validation.
 const examOptionsDB = [];
 /*Initialization of the indices of the objects in the examData array(for populating the questions and options),
-which will be used in reference to the examOptionDB array, when injecting data into it. */
+which will be used in reference to the examOptionDB array, when injecting data into the array. */
 let currentQuestion = 0;
 const optionID = [examOptionA, examOptionB, examOptionC, examOptionD];
 //Function for loading the exam questions and options. Will be called later down the code.
@@ -42,8 +42,8 @@ let otherOptionSelector1;
 let otherOptionSelector2;
 let otherOptionSelector3;
 
-/*Declarations for the exam options(buttons) functions, which will be used to determine whether an option
-which was selected is the correct answer or not.*/
+/*Declarations for the exam options values, which will be used to determine whether an option which was 
+selected is the correct answer or not.*/
 let examOptionAvalue;
 let examOptionBvalue;
 let examOptionCvalue;
@@ -82,7 +82,7 @@ let examArrayOptionFunction = () => {
 
 
 /*Creating functions for assigning data to the options when clicked, which will be used to determine whether
-the option selected was the right answer or not, and for color styling, differentiating it from other
+the option selected was the right answer or not, for color styling, differentiating it from other
 non-selected buttons, and for reseting the button colors when the next question loads.*/
 let optionColorReset = () => {
     examOptionA.style.backgroundImage = "linear-gradient(rgba(2, 2, 2, 0.4), rgb(2, 2, 2))";
@@ -154,7 +154,7 @@ submitButton.style.display = "none";
 export let examScore = 0;
 //Importing and calling the exam countdown timer function.
 examCountDownTimer();
-
+//Creating a function to refresh the questions and options UI
 let examQuestionSwitcher = () => {
     option = 0;
     currentQuestion++;
@@ -223,7 +223,7 @@ nextButton.addEventListener("click", () => {
         
         submitButton.style.display = "none";
         examScore -= 5;
-        /*In the line of code below, data type null is assigned to the array item indexed to the current question 'index'.
+        /*In the line of code below, data type (null) is assigned to the array item indexed to the current question 'index'.
         This will change the value and subtract the score for that question, so that if it is answered correctly
         on another attempt, it will increment the score.*/
         examOptionsDB[currentQuestion] = null;
